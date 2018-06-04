@@ -10,8 +10,8 @@ public class Window extends Application {
     @Override
     public void start(Stage stage) throws Exception {
         Parent root = FXMLLoader.load(getClass().getResource("/Window.fxml"));
-        stage.setTitle("Hello World");
-        stage.setScene(new Scene(root, 300, 275));
+        stage.setTitle("Multi-Agents");
+        stage.setScene(new Scene(root, 500, 375));
         stage.show();
     }
 
