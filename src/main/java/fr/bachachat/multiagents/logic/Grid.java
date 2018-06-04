@@ -28,4 +28,8 @@ public class Grid {
         }
         return true;
     }
+
+    public void addAgent(Agent agent) {
+        this.agents.put(agent.getPosition(), agent);
+    }
 }
