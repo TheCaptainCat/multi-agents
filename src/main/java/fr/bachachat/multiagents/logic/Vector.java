@@ -19,6 +19,10 @@ public class Vector {
         return y;
     }
 
+    public double distanceTo(Vector vector) {
+        return Math.sqrt(Math.pow(this.x - vector.getX(), 2) + Math.pow(this.y - vector.getY(), 2));
+    }
+
     @Override
     public int hashCode() {
         return Objects.hash(x, y);
