@@ -16,11 +16,11 @@ public class Window extends Application {
         this.grid = new Grid(5);
         this.grid.initializeRandomAgents(10);
         primaryStage.setTitle("Multi-Agents");
-        this.gridDisplay = new GridDisplay(5, grid);
+        this.gridDisplay = new GridDisplay(grid.getSize(), grid);
         this.grid.launchAgents();
         BorderPane mainPanel = new BorderPane();
         mainPanel.setCenter(this.gridDisplay.getDisplay());
-        Scene scene = new Scene(mainPanel, 600, 600);
+        Scene scene = new Scene(mainPanel, grid.getSize() * 120, grid.getSize() * 120);
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(e -> close());
         draw(primaryStage);

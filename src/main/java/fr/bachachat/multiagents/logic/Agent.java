@@ -4,8 +4,8 @@ import fr.bachachat.multiagents.logic.behaviors.Behavior;
 import fr.bachachat.multiagents.logic.behaviors.MessageBehavior;
 import fr.bachachat.multiagents.logic.messages.Message;
 
-import java.util.LinkedList;
 import java.util.Queue;
+import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Agent implements Runnable {
     private static int IDS = 0;
@@ -26,7 +26,7 @@ public class Agent implements Runnable {
         this.grid = grid;
         this.running = false;
         this.behavior = new MessageBehavior(this.grid, this);
-        this.messages = new LinkedList<>();
+        this.messages = new ConcurrentLinkedQueue<>();
     }
 
     public int getId() {

@@ -1,6 +1,7 @@
 package fr.bachachat.multiagents.logic;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
 
 public class Grid {
@@ -10,7 +11,7 @@ public class Grid {
 
     public Grid(int size) {
         this.size = size;
-        this.agents = new HashMap<>();
+        this.agents = new ConcurrentHashMap<>();
         this.semaphore = new Semaphore(1);
     }
 
