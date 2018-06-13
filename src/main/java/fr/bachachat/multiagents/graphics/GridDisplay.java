@@ -1,6 +1,7 @@
 package fr.bachachat.multiagents.graphics;
 
 import fr.bachachat.multiagents.logic.Grid;
+import fr.bachachat.multiagents.logic.Vector;
 import javafx.scene.Group;
 import javafx.scene.layout.TilePane;
 import javafx.scene.paint.Color;
@@ -21,22 +22,21 @@ public class GridDisplay {
         tilePane.setStyle("-fx-background-color: rgba(255, 215, 0, 0.1);");
         tilePane.setHgap(GAP);
         tilePane.setVgap(GAP);
-        setSize(size);
         this.grid = grid;
+        setSize(size);
     }
 
     public void setSize(int newSize) {
         size = newSize;
         tilePane.setPrefColumns(size);
         tilePane.setPrefRows(size);
-        createElements();
     }
 
     public Group getDisplay() {
         return display;
     }
 
-    private void createElements() {
+    public void createElements() {
         tilePane.getChildren().clear();
         int number = 1;
         Text text = null;
@@ -45,7 +45,10 @@ public class GridDisplay {
             for (int j = 0; j < size; j++) {
                 group = new Group();
                 text = new Text(45, 55, String.valueOf(number));
-                group.getChildren().add(createElement());
+                if (this.grid.getAgent(new Vector(j, i)) == null)
+                    group.getChildren().add(createElement());
+                else
+                    group.getChildren().add(createAgent());
                 group.getChildren().add(text);
                 tilePane.getChildren().add(group);
                 number++;
@@ -57,6 +60,13 @@ public class GridDisplay {
         Rectangle rectangle = new Rectangle(0, 0, ELEMENT_SIZE, ELEMENT_SIZE);
         rectangle.setStroke(Color.ORANGE);
         rectangle.setFill(Color.STEELBLUE);
+        return rectangle;
+    }
+
+    private Rectangle createAgent() {
+        Rectangle rectangle = new Rectangle(0, 0, ELEMENT_SIZE, ELEMENT_SIZE);
+        rectangle.setStroke(Color.RED);
+        rectangle.setFill(Color.GREEN);
         return rectangle;
     }
 
