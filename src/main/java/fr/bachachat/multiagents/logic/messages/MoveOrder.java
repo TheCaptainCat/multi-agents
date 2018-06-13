@@ -15,4 +15,20 @@ public class MoveOrder implements Order {
         this.receiver = receiver;
         this.destination = receiver.getPosition();
     }
+
+    public Agent getEmitter() {
+        return emitter;
+    }
+
+    public Vector getSource() {
+        return source;
+    }
+
+    public Agent getReceiver() {
+        return receiver;
+    }
+
+    public Vector getDestination() {
+        return destination;
+    }
 }

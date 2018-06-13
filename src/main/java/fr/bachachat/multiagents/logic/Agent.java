@@ -1,11 +1,15 @@
 package fr.bachachat.multiagents.logic;
 
 import fr.bachachat.multiagents.logic.behaviors.Behavior;
-import fr.bachachat.multiagents.logic.behaviors.SimpleBehavior;
+import fr.bachachat.multiagents.logic.behaviors.MessageBehavior;
+import fr.bachachat.multiagents.logic.messages.Message;
+
+import java.util.LinkedList;
+import java.util.Queue;
 
 public class Agent implements Runnable {
     private static int IDS = 0;
-    private static long PAUSE_TIME = 1000;
+    private static long PAUSE_TIME = 500;
 
     private int id;
     private Vector position;
@@ -13,6 +17,7 @@ public class Agent implements Runnable {
     private Grid grid;
     private boolean running;
     private Behavior behavior;
+    private Queue<Message> messages;
 
     public Agent(Vector position, Vector destination, Grid grid) {
         this.id = Agent.IDS++;
@@ -20,7 +25,8 @@ public class Agent implements Runnable {
         this.destination = destination;
         this.grid = grid;
         this.running = false;
-        this.behavior = new SimpleBehavior(this.grid, this);
+        this.behavior = new MessageBehavior(this.grid, this);
+        this.messages = new LinkedList<>();
     }
 
     public int getId() {
@@ -37,6 +43,14 @@ public class Agent implements Runnable {
 
     public Vector getDestination() {
         return destination;
+    }
+
+    public Message popMessage() {
+        return this.messages.size() > 0 ? this.messages.poll() : null;
+    }
+
+    public void addMessage(Message message) {
+        this.messages.add(message);
     }
 
     public boolean hasArrived() {
@@ -68,5 +82,13 @@ public class Agent implements Runnable {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public String toString() {
+        return "Agent{" +
+                "id=" + id +
+                ", position=" + position +
+                '}';
     }
 }

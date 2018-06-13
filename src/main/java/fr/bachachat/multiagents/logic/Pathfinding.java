@@ -8,8 +8,8 @@ public class Pathfinding {
         return v1.distanceTo(v2);
     }
 
-    private static void computeNeighbours(Grid grid, Map<Vector, Double> neighbours, Set<Vector> visited,
-                                          Vector position, Vector destination, double cost) {
+    public static void computeNeighbours(Grid grid, Map<Vector, Double> neighbours, Set<Vector> visited,
+                                         Vector position, Vector destination, double cost) {
         Integer[] xs = new Integer[]{-1, 1, 0, 0};
         Integer[] ys = new Integer[]{0, 0, -1, 1};
         List<Predicate<Vector>> predicates = new ArrayList<>();
@@ -27,6 +27,18 @@ public class Pathfinding {
         }
     }
 
+    public static Vector findBestCandidate(Map<Vector, Double> neighbours) {
+        Vector minVector = null;
+        double minCost = Double.POSITIVE_INFINITY;
+        for (Vector vector : neighbours.keySet()) {
+            if (neighbours.get(vector) < minCost) {
+                minCost = neighbours.get(vector);
+                minVector = vector;
+            }
+        }
+        return minVector;
+    }
+
     public static Vector nextPosition(Grid grid, Agent agent) {
         Vector position = agent.getPosition();
         List<Vector> path = new ArrayList<>();
@@ -37,14 +49,7 @@ public class Pathfinding {
             cost++;
             visited.add(position);
             computeNeighbours(grid, neighbours, visited, position, agent.getDestination(), cost);
-            Vector minVector = null;
-            double minCost = Double.POSITIVE_INFINITY;
-            for (Vector vector : neighbours.keySet()) {
-                if (neighbours.get(vector) < minCost) {
-                    minCost = neighbours.get(vector);
-                    minVector = vector;
-                }
-            }
+            Vector minVector = findBestCandidate(neighbours);
             neighbours.remove(minVector);
             path.add(minVector);
             position = minVector;

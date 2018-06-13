@@ -35,8 +35,10 @@ public class Window extends Application {
         new Thread(() -> {
             while (true) {
                 try {
-                    Thread.sleep(100);
+                    Thread.sleep(1);
                     Platform.runLater(() -> draw(primaryStage, scene));
+                    if (grid.isCompleted())
+                        System.out.println("DONE");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
