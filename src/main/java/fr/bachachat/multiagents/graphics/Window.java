@@ -19,6 +19,9 @@ public class Window extends Application {
         grid.addAgent(new Agent(new Vector(4, 0), new Vector(4, 4), grid));
         grid.addAgent(new Agent(new Vector(4, 4), new Vector(0, 4), grid));
         grid.addAgent(new Agent(new Vector(0, 4), new Vector(0, 0), grid));
+        grid.addAgent(new Agent(new Vector(0, 1), new Vector(4, 3), grid));
+        grid.addAgent(new Agent(new Vector(2, 3), new Vector(3, 0), grid));
+        grid.addAgent(new Agent(new Vector(1, 4), new Vector(4, 2), grid));
         // Parent root = FXMLLoader.load(getClass().getResource("/Window.fxml"));
         primaryStage.setTitle("Multi-Agents");
         gridDisplay = new GridDisplay(5, grid);
@@ -26,6 +29,8 @@ public class Window extends Application {
         BorderPane mainPanel = new BorderPane();
         mainPanel.setCenter(gridDisplay.getDisplay());
         Scene scene = new Scene(mainPanel, 600, 600);
+        primaryStage.setScene(scene);
+        primaryStage.setOnCloseRequest(e -> close());
         draw(primaryStage, scene);
         new Thread(() -> {
             while (true) {
@@ -39,9 +44,12 @@ public class Window extends Application {
         }).start();
     }
 
+    public void close() {
+        System.exit(0);
+    }
+
     private void draw(Stage primaryStage, Scene scene) {
         gridDisplay.createElements();
-        primaryStage.setScene(scene);
         primaryStage.show();
     }
 
