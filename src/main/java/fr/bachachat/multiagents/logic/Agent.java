@@ -1,5 +1,8 @@
 package fr.bachachat.multiagents.logic;
 
+import fr.bachachat.multiagents.logic.behaviors.Behavior;
+import fr.bachachat.multiagents.logic.behaviors.SimpleBehavior;
+
 public class Agent implements Runnable {
     private static int IDS = 0;
     private static long PAUSE_TIME = 1000;
@@ -9,6 +12,7 @@ public class Agent implements Runnable {
     private Vector destination;
     private Grid grid;
     private boolean running;
+    private Behavior behavior;
 
     public Agent(Vector position, Vector destination, Grid grid) {
         this.id = Agent.IDS++;
@@ -16,6 +20,7 @@ public class Agent implements Runnable {
         this.destination = destination;
         this.grid = grid;
         this.running = false;
+        this.behavior = new SimpleBehavior(this.grid, this);
     }
 
     public int getId() {
@@ -56,12 +61,9 @@ public class Agent implements Runnable {
         try {
             while (this.running) {
                 Thread.sleep(Agent.PAUSE_TIME);
-                grid.getSemaphore().acquire();
-                if (!this.position.equals(this.destination)) {
-                    Vector vector = Pathfinding.nextPosition(this.grid, this);
-                    this.grid.moveAgent(this, vector);
-                }
-                grid.getSemaphore().release();
+                this.grid.getSemaphore().acquire();
+                this.behavior.moveAgent();
+                this.grid.getSemaphore().release();
             }
         } catch (Exception e) {
             e.printStackTrace();
