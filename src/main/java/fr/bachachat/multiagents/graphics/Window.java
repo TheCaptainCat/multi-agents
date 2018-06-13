@@ -9,25 +9,26 @@ import javafx.stage.Stage;
 
 public class Window extends Application {
     private GridDisplay gridDisplay;
+    private Grid grid;
 
     @Override
     public void start(Stage primaryStage) {
-        Grid grid = new Grid(5);
-        grid.initializeRandomAgents(10);
+        this.grid = new Grid(5);
+        this.grid.initializeRandomAgents(10);
         primaryStage.setTitle("Multi-Agents");
-        gridDisplay = new GridDisplay(5, grid);
-        grid.launchAgents();
+        this.gridDisplay = new GridDisplay(5, grid);
+        this.grid.launchAgents();
         BorderPane mainPanel = new BorderPane();
-        mainPanel.setCenter(gridDisplay.getDisplay());
+        mainPanel.setCenter(this.gridDisplay.getDisplay());
         Scene scene = new Scene(mainPanel, 600, 600);
         primaryStage.setScene(scene);
         primaryStage.setOnCloseRequest(e -> close());
-        draw(primaryStage, scene);
+        draw(primaryStage);
         new Thread(() -> {
             while (true) {
                 try {
                     Thread.sleep(1);
-                    Platform.runLater(() -> draw(primaryStage, scene));
+                    Platform.runLater(() -> draw(primaryStage));
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
@@ -39,8 +40,10 @@ public class Window extends Application {
         System.exit(0);
     }
 
-    private void draw(Stage primaryStage, Scene scene) {
-        gridDisplay.createElements();
+    private void draw(Stage primaryStage) {
+        this.gridDisplay.createElements();
+        if (this.grid.isCompleted())
+            primaryStage.setTitle("Multi-Agents - Finished");
         primaryStage.show();
     }
 

@@ -9,7 +9,7 @@ import java.util.Queue;
 
 public class Agent implements Runnable {
     private static int IDS = 0;
-    private static long PAUSE_TIME = 500;
+    private static long PAUSE_TIME = 200;
 
     private int id;
     private Vector position;
@@ -86,9 +86,6 @@ public class Agent implements Runnable {
 
     @Override
     public String toString() {
-        return "Agent{" +
-                "id=" + id +
-                ", position=" + position +
-                '}';
+        return String.format("Agent(%d, %s)", this.id, this.position.toString());
     }
 }

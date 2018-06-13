@@ -13,13 +13,15 @@ public class Pathfinding {
         Integer[] xs = new Integer[]{-1, 1, 0, 0};
         Integer[] ys = new Integer[]{0, 0, -1, 1};
         List<Predicate<Vector>> predicates = new ArrayList<>();
+        List<Integer> order = Arrays.asList(0, 1, 2, 3);
+        Collections.shuffle(order);
         predicates.add((Vector v) -> v.getX() > 0);
         predicates.add((Vector v) -> v.getX() < grid.getSize() - 1);
         predicates.add((Vector v) -> v.getY() > 0);
         predicates.add((Vector v) -> v.getY() < grid.getSize() - 1);
         for (int i = 0; i < 4; i++) {
-            if (predicates.get(i).test(position)) {
-                Vector neighbour = new Vector(position.getX() + xs[i], position.getY() + ys[i]);
+            if (predicates.get(order.get(i)).test(position)) {
+                Vector neighbour = new Vector(position.getX() + xs[order.get(i)], position.getY() + ys[order.get(i)]);
                 if (!visited.contains(neighbour)) {
                     neighbours.put(neighbour, heuristic(neighbour, destination) + cost);
                 }
