@@ -1,38 +1,28 @@
 package fr.bachachat.multiagents.logic;
 
 import java.util.*;
+import java.util.function.Predicate;
 
 public class Pathfinding {
     private static double heuristic(Vector v1, Vector v2) {
         return v1.distanceTo(v2);
     }
 
-    private static void computeNeighbours(Grid grid, Map<Vector,
-            Double> neighbours, Set<Vector> visited, Vector position, Vector destination, double cost) {
+    private static void computeNeighbours(Grid grid, Map<Vector, Double> neighbours, Set<Vector> visited,
+                                          Vector position, Vector destination, double cost) {
         Integer[] xs = new Integer[]{-1, 1, 0, 0};
         Integer[] ys = new Integer[]{0, 0, -1, 1};
-        if (position.getX() > 0) {
-            Vector neighbour = new Vector(position.getX() - 1, position.getY());
-            if (!visited.contains(neighbour)) {
-                neighbours.put(neighbour, heuristic(neighbour, destination) + cost);
-            }
-        }
-        if (position.getX() < grid.getSize() - 1) {
-            Vector neighbour = new Vector(position.getX() + 1, position.getY());
-            if (!visited.contains(neighbour)) {
-                neighbours.put(neighbour, heuristic(neighbour, destination) + cost);
-            }
-        }
-        if (position.getY() > 0) {
-            Vector neighbour = new Vector(position.getX(), position.getY() - 1);
-            if (!visited.contains(neighbour)) {
-                neighbours.put(neighbour, heuristic(neighbour, destination) + cost);
-            }
-        }
-        if (position.getY() < grid.getSize() - 1) {
-            Vector neighbour = new Vector(position.getX(), position.getY() + 1);
-            if (!visited.contains(neighbour)) {
-                neighbours.put(neighbour, heuristic(neighbour, destination) + cost);
+        List<Predicate<Vector>> predicates = new ArrayList<>();
+        predicates.add((Vector v) -> v.getX() > 0);
+        predicates.add((Vector v) -> v.getX() < grid.getSize() - 1);
+        predicates.add((Vector v) -> v.getY() > 0);
+        predicates.add((Vector v) -> v.getY() < grid.getSize() - 1);
+        for (int i = 0; i < 4; i++) {
+            if (predicates.get(i).test(position)) {
+                Vector neighbour = new Vector(position.getX() + xs[i], position.getY() + ys[i]);
+                if (!visited.contains(neighbour)) {
+                    neighbours.put(neighbour, heuristic(neighbour, destination) + cost);
+                }
             }
         }
     }
