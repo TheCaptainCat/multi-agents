@@ -56,10 +56,12 @@ public class Agent implements Runnable {
         try {
             while (this.running) {
                 Thread.sleep(Agent.PAUSE_TIME);
+                grid.getSemaphore().acquire();
                 if (!this.position.equals(this.destination)) {
                     Vector vector = Pathfinding.nextPosition(this.grid, this);
                     this.grid.moveAgent(this, vector);
                 }
+                grid.getSemaphore().release();
             }
         } catch (Exception e) {
             e.printStackTrace();
