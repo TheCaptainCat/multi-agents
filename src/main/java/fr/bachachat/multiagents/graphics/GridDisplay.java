@@ -12,7 +12,7 @@ import javafx.scene.text.Text;
 public class GridDisplay {
 
     private static final double ELEMENT_SIZE = 100;
-    private static final double GAP = ELEMENT_SIZE / 10;
+    private static final double GAP = 0;
 
     private TilePane tilePane = new TilePane();
     private Group display = new Group(tilePane);
@@ -51,7 +51,7 @@ public class GridDisplay {
                     group.getChildren().add(createElement());
                 else {
                     group.getChildren().add(createAgent());
-                    text = new Text(45, 55, String.valueOf(agent.getId()));
+                    text = new Text(40, 55, String.valueOf(agent.getDestination()));
                     group.getChildren().add(text);
                 }
                 tilePane.getChildren().add(group);
@@ -62,14 +62,14 @@ public class GridDisplay {
 
     private Rectangle createElement() {
         Rectangle rectangle = new Rectangle(0, 0, ELEMENT_SIZE, ELEMENT_SIZE);
-        rectangle.setStroke(Color.ORANGE);
-        rectangle.setFill(Color.STEELBLUE);
+        rectangle.setStroke(Color.BLACK);
+        rectangle.setFill(Color.WHITE);
         return rectangle;
     }
 
     private Rectangle createAgent() {
         Rectangle rectangle = new Rectangle(0, 0, ELEMENT_SIZE, ELEMENT_SIZE);
-        rectangle.setStroke(Color.RED);
+        rectangle.setStroke(Color.BLACK);
         rectangle.setFill(Color.GREEN);
         return rectangle;
     }

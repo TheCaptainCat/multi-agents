@@ -1,8 +1,6 @@
 package fr.bachachat.multiagents.graphics;
 
-import fr.bachachat.multiagents.logic.Agent;
 import fr.bachachat.multiagents.logic.Grid;
-import fr.bachachat.multiagents.logic.Vector;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
@@ -15,14 +13,7 @@ public class Window extends Application {
     @Override
     public void start(Stage primaryStage) {
         Grid grid = new Grid(5);
-        grid.addAgent(new Agent(new Vector(0, 0), new Vector(4, 0), grid));
-        grid.addAgent(new Agent(new Vector(4, 0), new Vector(4, 4), grid));
-        grid.addAgent(new Agent(new Vector(4, 4), new Vector(0, 4), grid));
-        grid.addAgent(new Agent(new Vector(0, 4), new Vector(0, 0), grid));
-        grid.addAgent(new Agent(new Vector(0, 1), new Vector(4, 3), grid));
-        grid.addAgent(new Agent(new Vector(2, 3), new Vector(3, 0), grid));
-        grid.addAgent(new Agent(new Vector(1, 4), new Vector(4, 2), grid));
-        // Parent root = FXMLLoader.load(getClass().getResource("/Window.fxml"));
+        grid.initializeRandomAgents(10);
         primaryStage.setTitle("Multi-Agents");
         gridDisplay = new GridDisplay(5, grid);
         grid.launchAgents();
@@ -37,8 +28,6 @@ public class Window extends Application {
                 try {
                     Thread.sleep(1);
                     Platform.runLater(() -> draw(primaryStage, scene));
-                    if (grid.isCompleted())
-                        System.out.println("DONE");
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
