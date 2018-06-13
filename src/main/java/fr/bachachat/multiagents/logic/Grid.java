@@ -1,14 +1,15 @@
 package fr.bachachat.multiagents.logic;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 public class Grid {
     private final int size;
-    private HashMap<Vector, Agent> agents;
+    private Map<Vector, Agent> agents;
 
     public Grid(int size) {
         this.size = size;
-        this.agents = new HashMap<>();
+        this.agents = new ConcurrentHashMap<>();
     }
 
     public void initializeRandomAgents(int count) {
