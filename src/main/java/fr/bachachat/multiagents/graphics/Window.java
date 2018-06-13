@@ -15,10 +15,10 @@ public class Window extends Application {
     @Override
     public void start(Stage primaryStage) {
         Grid grid = new Grid(5);
-        grid.addAgent(new Agent(new Vector(0, 0), new Vector(4, 4), grid));
-        grid.addAgent(new Agent(new Vector(1, 0), new Vector(0, 4), grid));
-        grid.addAgent(new Agent(new Vector(2, 2), new Vector(0, 0), grid));
-        grid.addAgent(new Agent(new Vector(4, 3), new Vector(1, 2), grid));
+        grid.addAgent(new Agent(new Vector(0, 0), new Vector(4, 0), grid));
+        grid.addAgent(new Agent(new Vector(4, 0), new Vector(4, 4), grid));
+        grid.addAgent(new Agent(new Vector(4, 4), new Vector(0, 4), grid));
+        grid.addAgent(new Agent(new Vector(0, 4), new Vector(0, 0), grid));
         // Parent root = FXMLLoader.load(getClass().getResource("/Window.fxml"));
         primaryStage.setTitle("Multi-Agents");
         gridDisplay = new GridDisplay(5, grid);

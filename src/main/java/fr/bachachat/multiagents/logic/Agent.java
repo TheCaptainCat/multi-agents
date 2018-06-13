@@ -18,6 +18,10 @@ public class Agent implements Runnable {
         this.running = false;
     }
 
+    public int getId() {
+        return id;
+    }
+
     public Vector getPosition() {
         return position;
     }

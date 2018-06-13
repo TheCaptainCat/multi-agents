@@ -1,5 +1,6 @@
 package fr.bachachat.multiagents.graphics;
 
+import fr.bachachat.multiagents.logic.Agent;
 import fr.bachachat.multiagents.logic.Grid;
 import fr.bachachat.multiagents.logic.Vector;
 import javafx.scene.Group;
@@ -41,15 +42,18 @@ public class GridDisplay {
         int number = 1;
         Text text = null;
         Group group = null;
+        Agent agent = null;
         for (int i = 0; i < size; i++) {
             for (int j = 0; j < size; j++) {
                 group = new Group();
-                text = new Text(45, 55, String.valueOf(number));
-                if (this.grid.getAgent(new Vector(j, i)) == null)
+                agent = this.grid.getAgent(new Vector(j, i));
+                if (agent == null)
                     group.getChildren().add(createElement());
-                else
+                else {
                     group.getChildren().add(createAgent());
-                group.getChildren().add(text);
+                    text = new Text(45, 55, String.valueOf(agent.getId()));
+                    group.getChildren().add(text);
+                }
                 tilePane.getChildren().add(group);
                 number++;
             }
