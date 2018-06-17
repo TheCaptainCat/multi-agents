@@ -11,7 +11,7 @@ public class MoveOrder implements Order {
 
     public MoveOrder(Agent emitter, Agent receiver) {
         this.emitter = emitter;
-        this.source = emitter.getPosition())
+        this.source = emitter.getPosition();
         this.receiver = receiver;
         this.destination = receiver.getPosition();
     }
