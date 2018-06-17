@@ -5,6 +5,7 @@ import fr.bachachat.multiagents.logic.behaviors.MessageBehavior;
 import fr.bachachat.multiagents.logic.messages.Message;
 
 import java.util.Queue;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class Agent implements Runnable {
@@ -12,6 +13,7 @@ public class Agent implements Runnable {
     private static long PAUSE_TIME = 200;
 
     private int id;
+    private long pauseTime = new Random().nextInt(100) + 200;
     private Vector position;
     private Vector destination;
     private Grid grid;
@@ -20,6 +22,7 @@ public class Agent implements Runnable {
     private Queue<Message> messages;
 
     public Agent(Vector position, Vector destination, Grid grid) {
+        System.out.println(pauseTime);
         this.id = Agent.IDS++;
         this.position = position;
         this.destination = destination;
@@ -74,7 +77,7 @@ public class Agent implements Runnable {
         this.running = true;
         try {
             while (this.running) {
-                Thread.sleep(Agent.PAUSE_TIME);
+                Thread.sleep(this.pauseTime);
                 this.grid.getSemaphore().acquire();
                 this.behavior.moveAgent();
                 this.grid.getSemaphore().release();
